@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Gaia Times – SDG Newspaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f7f3ec;--card:#fffdf8;--ink:#2a1626;--plum:#450C3F;--rose:#9a4a7a;--rule:#cdbfae;--muted:#6b5a66;--on-plum:#f7f3ec;
+--head:'Playfair Display',Georgia,'Times New Roman',serif;--body:'Source Serif 4',Georgia,serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1c1119;--card:#26171f;--ink:#f1e8ee;--plum:#6a1f5d;--rose:#d08fb8;--rule:#4a3544;--muted:#b9a5b3;--on-plum:#fff}}
+:root[data-theme="dark"]{--paper:#1c1119;--card:#26171f;--ink:#f1e8ee;--plum:#6a1f5d;--rose:#d08fb8;--rule:#4a3544;--muted:#b9a5b3;--on-plum:#fff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.65 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.dateline{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:14px;color:var(--muted);border-bottom:1px solid var(--rule);padding:8px 0}
+.masthead{text-align:center;padding:18px 0 10px;border-bottom:4px double var(--plum)}
+.masthead h1{font:800 clamp(2.4rem,8vw,4.6rem)/1 var(--head);color:var(--plum);margin:0;letter-spacing:-.01em}
+.masthead p{margin:6px 0 0;font-style:italic;color:var(--muted)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);z-index:5;border-bottom:1px solid var(--plum)}
+nav .wrap{display:flex;justify-content:center;gap:4px;overflow-x:auto}
+nav a{padding:12px 18px;text-decoration:none;color:var(--ink);font:600 16px var(--head);border-bottom:3px solid transparent;white-space:nowrap;transition:border-color .25s,color .25s}
+nav a:hover{color:var(--rose)}
+nav a.on{color:var(--plum);border-bottom-color:var(--plum)}
+@media (prefers-color-scheme:dark){nav a.on{color:var(--rose);border-bottom-color:var(--rose)}}
+section.page{display:none;padding:28px 0 56px}
+section.page.on{display:block;animation:fade .45s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+h2{font:800 clamp(1.7rem,4vw,2.4rem)/1.15 var(--head);margin:0 0 6px;color:var(--plum)}
+h3{font:600 1.25rem/1.3 var(--head);margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 22px}
+@media (prefers-color-scheme:dark){h2{color:var(--rose)}}
+.lead{display:grid;grid-template-columns:2fr 1fr;gap:28px}
+.lead>div:first-child{border-right:1px solid var(--rule);padding-right:28px}
+.lead .big{font:800 clamp(1.9rem,5vw,3rem)/1.1 var(--head);margin:0 0 12px}
+.cols{columns:2;column-gap:28px;column-rule:1px solid var(--rule)}
+.cols p{margin:0 0 12px;text-align:justify;hyphens:auto}
+.side h3{border-bottom:1px solid var(--rule);padding-bottom:6px}
+.side p{margin:0 0 14px;font-size:16px}
+.band{background:var(--plum);color:var(--on-plum);padding:22px;margin-top:28px}
+.band h3{margin:0 0 4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--rule);padding:16px}
+.card small{color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.tabs button{font:600 15px var(--head);padding:9px 16px;border:1px solid var(--plum);background:transparent;color:var(--ink);cursor:pointer;transition:background .25s,color .25s}
+.tabs button.on,.tabs button:hover{background:var(--plum);color:var(--on-plum)}
+.sdg{display:flex;gap:12px;align-items:flex-start}
+.sdg b{flex:none;width:42px;height:42px;display:grid;place-items:center;background:var(--plum);color:var(--on-plum);font:800 18px var(--head)}
+.sdg h3{font-size:1.05rem}
+.sdg p{margin:0;font-size:15px;color:var(--muted)}
+.pane{display:none}.pane.on{display:block;animation:fade .4s ease}
+.time{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:28px;align-items:center}
+.clockbox{text-align:center}
+.clockbox svg{width:100%;max-width:280px}
+.face{fill:var(--card);stroke:var(--plum);stroke-width:4}
+.tick{stroke:var(--ink);stroke-width:2}
+.hand{stroke:var(--ink);stroke-linecap:round}
+.sec{stroke:var(--rose);stroke-width:2}
+.digital{font:600 1.6rem var(--head);margin-top:6px;color:var(--plum)}
+@media (prefers-color-scheme:dark){.digital{color:var(--rose)}}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.count div{background:var(--plum);color:var(--on-plum);text-align:center;padding:16px 6px}
+.count strong{display:block;font:800 clamp(1.6rem,6vw,2.8rem)/1 var(--head);font-variant-numeric:tabular-nums}
+.count span{font-size:14px}
+.paper-col{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.paper-col article{border-top:3px solid var(--plum);padding-top:10px}
+.tag{font-size:14px;color:var(--rose)}
+.goals{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-top:10px}.goal{display:flex;flex-direction:column;justify-content:space-between;min-height:150px;padding:12px;color:#fff;text-decoration:none;transition:transform .25s}.goal:hover{transform:translateY(-3px)}.goal.dk{color:#2a1626}.goal b{font:800 1.7rem/1 var(--head)}.goal span{font:600 .95rem/1.25 var(--head);text-transform:uppercase}.goal small{font-size:13px;line-height:1.3;margin-top:6px}.who{display:grid;grid-template-columns:1fr 1fr;gap:28px}.who ul{padding-left:20px;margin:0}.who li{margin-bottom:8px}.handle{display:inline-block;background:var(--plum);color:var(--on-plum);padding:4px 12px;font:600 1rem var(--head);margin:0 0 14px}@media (max-width:760px){.who{grid-template-columns:1fr}}
+[hidden]{display:none!important}.flashbar{display:flex;align-items:center;gap:12px;background:var(--plum);color:var(--on-plum);padding:8px 12px;margin:0 0 22px;overflow:hidden}.flashbadge{flex:none;background:var(--rose);color:#fff;font:800 13px var(--head);letter-spacing:.08em;padding:3px 9px;animation:blink 1s steps(2,start) infinite}.flashtxt{white-space:nowrap;display:inline-block;padding-left:100%;animation:scroll 22s linear infinite}@keyframes blink{50%{opacity:.25}}@keyframes scroll{to{transform:translateX(-100%)}}.pop{position:fixed;inset:0;z-index:20;background:rgba(20,8,18,.6);display:grid;place-items:center;padding:20px}.popbox{position:relative;background:var(--card);border-top:6px solid var(--plum);max-width:460px;width:100%;padding:26px 22px;text-align:center;animation:pin .35s ease}.popbox h3{font-size:1.6rem;margin:4px 0 12px}.popbox button{position:absolute;top:6px;right:10px;font-size:26px;background:none;border:0;color:var(--ink);cursor:pointer}@keyframes pin{from{transform:scale(.9);opacity:0}}
+footer{border-top:4px double var(--plum);padding:20px 0;text-align:center;color:var(--muted);font-size:15px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+@media (max-width:760px){.lead,.time,.paper-col{grid-template-columns:1fr}.lead>div:first-child{border:0;padding:0}.cols{columns:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="dateline"><span id="today"></span><span>Reporting on the 17 Sustainable Development Goals</span></div>
+  <div class="masthead"><h1>The Gaia Times</h1><p>News, knowledge and progress for a sustainable world</p></div>
+</header>
+<nav><div class="wrap" id="nav">
+  <a href="#home">Home</a><a href="#newspaper">Newspaper</a><a href="#gyaan">Gaia Gyaan</a><a href="#sdg">SDG</a><a href="#about">About</a>
+</div></nav>
+
+<main class="wrap">
+<section class="page" id="home">
+  <div class="lead">
+    <div>
+      <p class="tag">Front page</p>
+      <p class="big">Seventeen goals, one planet, and the clock is running.</p>
+      <div class="cols">
+        <p>In 2015, every UN member state adopted the 2030 Agenda, a shared plan to end poverty, protect the planet and build fairer societies. The Gaia Times follows that plan in plain language, one goal at a time.</p>
+        <p>Read the weekly newspaper for current stories, browse Gaia Gyaan for short explainers on every goal, and watch the SDG countdown to see how much time is left.</p>
+      </div>
+    </div>
+    <div class="side">
+      <h3>Inside this edition</h3>
+      <p><b>Newspaper</b> – this week’s stories on people, planet and peace.</p>
+      <p><b>Gaia Gyaan</b> – bite-sized knowledge, grouped by theme.</p>
+      <p><b>SDG</b> – the world clock and the countdown to 2030.</p>
+    </div>
+  </div>
+  <div class="band"><h3>Official source</h3><p style="margin:0">Goal descriptions follow the United Nations: <a style="color:inherit" href="https://sdgs.un.org/goals" target="_blank" rel="noopener">sdgs.un.org/goals</a></p></div>
+</section>
+
+<section class="page" id="newspaper">
+  <h2>This Week’s Newspaper</h2>
+  <p class="sub">Sample layout. Replace each story with a fact-checked one and add its source link and SDG tag.</p>
+  <div class="flashbar"><span class="flashbadge">FLASH</span><span class="flashtxt" id="fl"></span></div>
+  <div class="paper-col">
+    <article><p class="tag">SDG tag</p><h3>Headline for the national story</h3><p>Two or three lines of summary go here, followed by a link to the original source so readers can verify it.</p></article>
+      <!--   <article><p class="tag">SDG tag</p><h3>Headline today LASS </h3><p>Two or three lines of summary go here, followed by a link to the original source so readers can verify it.</p></article> DATE:08/11/2026 -->
+    <article><p class="tag">SDG tag</p><h3>Headline for the international story</h3><p>Two or three lines of summary go here, followed by a link to the original source so readers can verify it.</p></article>
+    <article><p class="tag">SDG tag</p><h3>Headline for the environment feature</h3><p>Flora, fauna, monuments and heritage worth preserving. Add the source link below the summary.</p></article>
+  </div>
+</section>
+
+<section class="page" id="gyaan">
+  <h2>Gaia Gyaan</h2>
+  <p class="sub">Choose a group to explore its goals.</p>
+  <div class="tabs" id="gtabs"></div>
+  <div id="gpanes"></div>
+</section>
+
+<section class="page" id="sdg">
+  <h2>SDG Dashboard</h2>
+  <p class="sub">Time never stops. Check the world clock and see what is left until 2030.</p>
+  <div class="time">
+    <div class="clockbox">
+      <svg viewBox="0 0 200 200" role="img" aria-label="Analog clock showing GMT">
+        <circle class="face" cx="100" cy="100" r="94"/>
+        <g id="ticks"></g>
+        <line class="hand" id="hh" x1="100" y1="100" x2="100" y2="58" stroke-width="6"/>
+        <line class="hand" id="mh" x1="100" y1="100" x2="100" y2="34" stroke-width="4"/>
+        <line class="hand sec" id="sh" x1="100" y1="112" x2="100" y2="26"/>
+        <circle cx="100" cy="100" r="5" fill="#450C3F"/>
+      </svg>
+      <div class="digital" id="dig">--:--:--</div>
+      <div>World clock · GMT</div>
+    </div>
+    <div>
+      <h3>SDG countdown to 31 December 2030</h3>
+      <div class="count" aria-live="off">
+        <div><strong id="d">0</strong><span>Days</span></div>
+        <div><strong id="h">0</strong><span>Hours</span></div>
+        <div><strong id="m">0</strong><span>Mins</span></div>
+        <div><strong id="s">0</strong><span>Sec</span></div>
+      </div>
+    </div>
+  </div>
+  <h3 style="margin-top:34px">The 17 Goals</h3>
+  <p class="sub">Select a goal to read the official UN description.</p>
+  <div class="goals" id="goals"></div>
+</section>
+
+<section class="page" id="about">
+  <h2>About</h2>
+  <p class="handle">newsdatewithrads</p>
+  <div class="cols">
+    <p>newsdatewithrads is an independent, hobbyist project that explains the UN Sustainable Development Goals for everyday readers. It comes from a background in aerospace engineering and a long-running interest in sustainability, technology and space. Everything is built on original research and links to its sources so every claim can be checked.</p></div>
+  <div class="who" style="margin-top:26px;grid-template-columns:1fr"><div><h3>Background</h3><ul><li>B.E. in Aeronautical Engineering and an MBA in IT.</li><li>4+ years of professional experience in aerospace product lifecycle and configuration management.</li><li>Certified Associate Product Manager, Institute of Product Leadership (March 2026).</li><li>Certificate in Sustainability and Corporate ESG, Skill India Digital Hub with Reliance Foundation (September 2025).</li></ul></div></div>
+  <div class="cols" style="margin-top:26px">
+    <p>The goals and their wording come from the United Nations. Stories, explainers and opinions here are the author’s own. Contact: newsdatewithrads2026@gmail.com</p>
+  </div>
+</section>
+</main>
+<div class="pop" id="pop" hidden role="dialog" aria-modal="true" aria-label="Next edition"><div class="popbox"><button id="popx" aria-label="Close">×</button><p class="tag">FLASH · WEEKLY EDITION</p><h3 id="pt">Next edition drops Sunday</h3><div class="count" id="pc"><div><strong id="pd">0</strong><span>Days</span></div><div><strong id="ph">0</strong><span>Hours</span></div><div><strong id="pm">0</strong><span>Mins</span></div><div><strong id="ps">0</strong><span>Sec</span></div></div><p style="margin:14px 0 0">A fresh edition arrives every Sunday at 9:00 AM. Come back then for new stories and SDG explainers.</p></div></div>
+<footer><div class="wrap">© The Gaia Times · Based on the UN 2030 Agenda · <a href="https://sdgs.un.org/goals" target="_blank" rel="noopener" style="color:inherit">Source</a></div></footer>
+
+<script>
+const G=[
+ {n:"Gaia Discovery",g:[[13,"Climate Action","Urgent action to combat climate change and its impacts."],[14,"Life Below Water","Conserve and sustainably use oceans, seas and marine resources."],[15,"Life on Land","Protect forests, restore land and halt biodiversity loss."]]},
+ {n:"Gaia Roots",g:[[1,"No Poverty","End poverty in all its forms everywhere."],[2,"Zero Hunger","End hunger, achieve food security and promote sustainable farming."],[6,"Clean Water and Sanitation","Ensure clean water and sanitation for all."],[10,"Reduced Inequalities","Reduce inequality within and among countries."]]},
+ {n:"Gaia Flourish",g:[[3,"Good Health and Well-being","Healthy lives and well-being for all ages."],[4,"Quality Education","Inclusive, equitable education and lifelong learning."],[5,"Gender Equality","Equality and empowerment for all women and girls."],[8,"Decent Work and Economic Growth","Sustained, inclusive growth and decent work for all."]]},
+ {n:"Gaia Systems",g:[[9,"Industry, Innovation and Infrastructure","Resilient infrastructure and inclusive, sustainable industry."],[11,"Sustainable Cities and Communities","Safe, resilient and sustainable cities."],[12,"Responsible Consumption and Production","Sustainable consumption and production patterns."],[16,"Peace, Justice and Strong Institutions","Peaceful societies, access to justice and accountable institutions."],[17,"Partnerships for the Goals","Strengthen global partnership for sustainable development."]]}
+];
+const $=id=>document.getElementById(id);
+$("today").textContent=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+// Gaia Gyaan tabs
+G.forEach((x,i)=>{
+  const b=document.createElement("button");b.textContent=x.n;b.onclick=()=>pick(i);$("gtabs").appendChild(b);
+  const p=document.createElement("div");p.className="pane";
+  p.innerHTML='<div class="grid">'+x.g.map(a=>`<div class="card sdg"><b>${a[0]}</b><div><h3>${a[1]}</h3><p>${a[2]}</p></div></div>`).join("")+'</div><p class="sub" style="margin-top:14px">Gaia Gyaan facts for these goals will appear here.</p>';
+  $("gpanes").appendChild(p);
+});
+function pick(i){[...$("gtabs").children].forEach((b,j)=>b.classList.toggle("on",i===j));[...$("gpanes").children].forEach((p,j)=>p.classList.toggle("on",i===j))}
+pick(0);
+const C=["#E5243B","#DDA63A","#4C9F38","#C5192D","#FF3A21","#26BDE2","#FCC30B","#A21942","#FD6925","#DD1367","#FD9D24","#BF8B2E","#3F7E44","#0A97D9","#56C02B","#00689D","#19486A"];
+const S=[["No Poverty","End poverty in all its forms everywhere."],["Zero Hunger","End hunger and promote sustainable agriculture."],["Good Health and Well-being","Healthy lives for all at all ages."],["Quality Education","Inclusive, equitable education for all."],["Gender Equality","Empower all women and girls."],["Clean Water and Sanitation","Water and sanitation for all."],["Affordable and Clean Energy","Reliable, sustainable, modern energy for all."],["Decent Work and Economic Growth","Inclusive growth and decent work for all."],["Industry, Innovation and Infrastructure","Resilient infrastructure and sustainable industry."],["Reduced Inequalities","Reduce inequality within and among countries."],["Sustainable Cities and Communities","Safe, resilient, sustainable cities."],["Responsible Consumption and Production","Sustainable consumption and production."],["Climate Action","Urgent action on climate change and its impacts."],["Life Below Water","Conserve oceans, seas and marine resources."],["Life on Land","Protect ecosystems, forests and biodiversity."],["Peace, Justice and Strong Institutions","Peaceful societies and accountable institutions."],["Partnerships for the Goals","Revitalize global partnership for development."]];
+$("goals").innerHTML=S.map((s,i)=>`<a class="goal${[1,6,10].includes(i)?' dk':''}" style="background:${C[i]}" href="https://sdgs.un.org/goals/goal${i+1}" target="_blank" rel="noopener"><b>${i+1}</b><span>${s[0]}</span><small>${s[1]}</small></a>`).join("");
+// Routing
+function route(){
+  let h=(location.hash||"#home").slice(1);if(!$(h))h="home";
+  document.querySelectorAll("section.page").forEach(s=>s.classList.toggle("on",s.id===h));
+  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+h));
+  window.scrollTo(0,0);if(h==="newspaper")showPop();
+}
+addEventListener("hashchange",route);route();
+var popShown=false;
+function nextEd(){var n=new Date(),d=new Date(n);d.setHours(9,0,0,0);d.setDate(n.getDate()+(7-n.getDay())%7);if(d<=n)d.setDate(d.getDate()+7);return d}
+function ed(){var n=new Date(),live=n.getDay()===0&&n.getHours()>=9,t=Math.max(0,Math.floor((nextEd()-n)/1000)),q=function(x){return String(x).padStart(2,'0')},dd=Math.floor(t/86400),hh=Math.floor(t%86400/3600),mm=Math.floor(t%3600/60),ss=t%60;
+ document.getElementById('pc').hidden=live;
+ document.getElementById('pt').textContent=live?'A new edition is out today!':'Next edition drops Sunday';
+ document.getElementById('fl').textContent=live?'Fresh edition is live today · Read the latest stories · New edition every Sunday':'New edition every Sunday · Next update in '+dd+'d '+q(hh)+'h '+q(mm)+'m '+q(ss)+'s · Come back Sunday for fresh stories';
+ document.getElementById('pd').textContent=dd;document.getElementById('ph').textContent=q(hh);document.getElementById('pm').textContent=q(mm);document.getElementById('ps').textContent=q(ss)}
+function showPop(){if(popShown)return;popShown=true;ed();document.getElementById('pop').hidden=false}
+function hidePop(){document.getElementById('pop').hidden=true}
+document.getElementById('popx').onclick=hidePop;document.getElementById('pop').onclick=function(e){if(e.target===this)hidePop()};addEventListener('keydown',function(e){if(e.key==='Escape')hidePop()});
+setInterval(ed,1000);ed();
+// Clock ticks
+for(let i=0;i<12;i++){const l=document.createElementNS("http://www.w3.org/2000/svg","line");l.setAttribute("class","tick");l.setAttribute("x1",100);l.setAttribute("x2",100);l.setAttribute("y1",10);l.setAttribute("y2",i%3?18:24);l.setAttribute("transform","rotate("+i*30+" 100 100)");$("ticks").appendChild(l)}
+const pad=n=>String(n).padStart(2,"0"),end=Date.UTC(2030,11,31,23,59,59);
+function tick(){
+  const n=new Date(),H=n.getUTCHours(),M=n.getUTCMinutes(),S=n.getUTCSeconds()+n.getUTCMilliseconds()/1000;
+  $("hh").setAttribute("transform","rotate("+((H%12)*30+M/2)+" 100 100)");
+  $("mh").setAttribute("transform","rotate("+(M*6+S/10)+" 100 100)");
+  $("sh").setAttribute("transform","rotate("+(S*6)+" 100 100)");
+  $("dig").textContent=pad(H)+":"+pad(M)+":"+pad(Math.floor(S));
+  let t=Math.max(0,Math.floor((end-n)/1000));
+  $("d").textContent=Math.floor(t/86400);$("h").textContent=pad(Math.floor(t%86400/3600));$("m").textContent=pad(Math.floor(t%3600/60));$("s").textContent=pad(t%60);
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+</body>
+</html>
